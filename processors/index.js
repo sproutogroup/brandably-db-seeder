@@ -107,21 +107,11 @@ async function processExcel(excelPaths) {
   config.DATA_DIR
  );
 
- const printTechniques = await processPrintTechniques(
+ const { printTechniques, techniqueNameToId } = await processPrintTechniques(
   printing,
   printTechniquesTypes,
   config.DATA_DIR
  );
-
- // Process print bulk discounts BEFORE print options (needs to come first)
- const {
-  plans: printPlans,
-  tiersData: printTiersData,
-  printCodeToPattern,
-  patternToId: printPatternToId,
-  tierPatterns: printTierPatterns,
-  printCodeToPlanId,
- } = await processPrintBulkDiscounts(printing, config.DATA_DIR);
 
  const { colorCounts, countToId } = await processColorCounts(
   printing,
@@ -133,10 +123,14 @@ async function processExcel(excelPaths) {
   config.DATA_DIR
  );
 
+ // Process print bulk discounts BEFORE print options (needs to come first)
+ const { plans: printPlans, printCodeToPlanId } =
+  await processPrintBulkDiscounts(printing, config.DATA_DIR);
+
  // Process print options - now returns both array and lookup
  const { printOptions, printCodeToOptionId } = await processPrintOptions(
   printing,
-  printTechniques,
+  techniqueNameToId,
   printCodeToPlanId,
   countToId,
   areaRangeToId,
@@ -189,6 +183,8 @@ async function processExcel(excelPaths) {
   await processProductVariantsPrintOptionsJunction(
    positions,
    skuToVariantId,
+   techniqueNameToId,
+   printOptions,
    printCodeToOptionId,
    printPositionCodeToId, // Just the lookup
    config.DATA_DIR
@@ -199,7 +195,8 @@ async function processExcel(excelPaths) {
   imageMap,
   skuToVariantId,
   config.DATA_DIR,
-  config.IMAGES_DIR
+  config.IMAGES_DIR,
+  false
  );
 
  // Print summary
