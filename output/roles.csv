@@ -1,4 +1,4 @@
 id,name,slug,description,type,is_active,created_at
-1,Super Administrator,super-admin,Full system access with all permissions,system,true,2025-10-30T07:46:48.900Z
-2,Store Manager,store-manager,"Can manage products, inventory, and orders",system,true,2025-10-30T07:46:48.900Z
-3,Customer,customer,Regular customer with basic access,system,true,2025-10-30T07:46:48.900Z
+1,Super Administrator,super-admin,Full system access with all permissions,system,true,2025-10-31T09:15:43.143Z
+2,Store Manager,store-manager,"Can manage products, inventory, and orders",system,true,2025-10-31T09:15:43.143Z
+3,Customer,customer,Regular customer with basic access,system,true,2025-10-31T09:15:43.143Z
